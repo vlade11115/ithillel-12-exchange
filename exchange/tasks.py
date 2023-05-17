@@ -1,9 +1,16 @@
 import datetime
 
-from .models import Rate
-from .exchange_provider import MonoExchange, PrivatExchange
-
 from celery import shared_task
+
+from .models import Rate
+from .exchange_provider import (
+    MonoExchange,
+    PrivatExchange,
+    OschadExchange,
+    CurrencyExchange,
+    VkurseExchange,
+    MinfinExchange,
+)
 
 
 @shared_task
@@ -22,7 +29,17 @@ def start_exchange(vendor, currency_a, currency_b):
         exchange = PrivatExchange(vendor, currency_a, currency_b)
     elif vendor == "mono":
         exchange = MonoExchange(vendor, currency_a, currency_b)
+    elif vendor == "oschad":
+        exchange = OschadExchange(vendor, currency_a, currency_b)
+    elif vendor == "currency":
+        exchange = CurrencyExchange(vendor, currency_a, currency_b)
+    elif vendor == "vkurse":
+        exchange = VkurseExchange(vendor, currency_a, currency_b)
+    elif vendor == "minfin":
+        exchange = MinfinExchange(vendor, currency_a, currency_b)
+
     exchange.get_rate()
+
     Rate.objects.get_or_create(
         date=current_date,
         vendor=vendor,

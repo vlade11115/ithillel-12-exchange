@@ -57,3 +57,52 @@ class PrivatExchange(ExchangeBase):
         for rate in r.json():
             if rate["ccy"] == self.currency_a and rate["base_ccy"] == self.currency_b:
                 self.pair = SellBuy(float(rate["sale"]), float(rate["buy"]))
+
+
+class OschadExchange(ExchangeBase):
+    def get_rate(self):
+        r = requests.get(
+            "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
+        )
+        r.raise_for_status()
+        for rate in r.json():
+            if rate["cc"] == self.currency_a and self.currency_b == "UAH":
+                self.pair = SellBuy(float(rate["rate"]), float(rate["rate"]))
+
+
+class CurrencyExchange(ExchangeBase):
+    def get_rate(self):
+        r = requests.get(
+            "https://api.currencyapi.com/v3/latest?apikey=Qja2YHvZFI5TI4eZdu24l1etllOPAnQ1mxlhlI2a&currencies=EUR%2CUSD&base_currency=UAH"
+        )
+        r.raise_for_status()
+        if self.currency_b == "UAH":
+            rate = r.json()["data"][self.currency_a]
+            self.pair = SellBuy(float(1 / rate["value"]), float(1 / rate["value"]))
+
+
+class VkurseExchange(ExchangeBase):
+    def get_rate(self):
+        r = requests.get("https://vkurse.dp.ua/course.json")
+        r.raise_for_status()
+        if self.currency_b == "UAH":
+            if self.currency_a == "USD":
+                rate = r.json()["Dollar"]
+                self.pair = SellBuy(float(rate["sale"]), float(rate["buy"]))
+            elif self.currency_a == "EUR":
+                rate = r.json()["Euro"]
+                self.pair = SellBuy(float(rate["sale"]), float(rate["buy"]))
+
+
+class MinfinExchange(ExchangeBase):
+    def get_rate(self):
+        r = requests.get(
+            "https://api.minfin.com.ua/summary/05012c3dcf6783803a3b6a3967a72af9fc58beb9/"
+        )
+        r.raise_for_status()
+        if self.currency_a == "USD" and self.currency_b == "UAH":
+            rate = r.json()["usd"]
+            self.pair = SellBuy(float(rate["ask"]), float(rate["bid"]))
+        elif self.currency_a == "EUR" and self.currency_b == "UAH":
+            rate = r.json()["eur"]
+            self.pair = SellBuy(float(rate["ask"]), float(rate["bid"]))

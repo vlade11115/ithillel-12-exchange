@@ -39,4 +39,44 @@ app.conf.beat_schedule = {
         "schedule": every_3_am,
         "args": ("privat", "USD", "UAH"),
     },
+    "oschad-USD-UAH": {
+        "task": "exchange.tasks.start_exchange",
+        "schedule": every_3_am,
+        "args": ("oschad", "USD", "UAH"),
+    },
+    "oschad-EUR-UAH": {
+        "task": "exchange.tasks.start_exchange",
+        "schedule": every_3_am,
+        "args": ("oschad", "EUR", "UAH"),
+    },
+    "curency-USD-UAH": {
+        "task": "exchange.tasks.start_exchange",
+        "schedule": every_3_am,
+        "args": ("currency", "USD", "UAH"),
+    },
+    "curency-EUR-UAH": {
+        "task": "exchange.tasks.start_exchange",
+        "schedule": every_3_am,
+        "args": ("currency", "EUR", "UAH"),
+    },
+    "vkurse-USD-UAH": {
+        "task": "exchange.tasks.start_exchange",
+        "schedule": every_3_am,
+        "args": ("vkurse", "USD", "UAH"),
+    },
+    "vkurse-EUR-UAH": {
+        "task": "exchange.tasks.start_exchange",
+        "schedule": every_3_am,
+        "args": ("vkurse", "EUR", "UAH"),
+    },
+    "minfin-USD-UAH": {
+        "task": "exchange.tasks.start_exchange",
+        "schedule": every_3_am,
+        "args": ("minfin", "USD", "UAH"),
+    },
+    "minfin-EUR-UAH": {
+        "task": "exchange.tasks.start_exchange",
+        "schedule": every_3_am,
+        "args": ("minfin", "EUR", "UAH"),
+    },
 }
