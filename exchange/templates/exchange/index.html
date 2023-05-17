@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exchange</title>
+</head>
+<body>
+    <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Calculate">
+    </form>
+    <div>
+        <p>Result: {{ result|floatformat }} UAH</p>
+        <p>Best rate: {{ best_rate_value|floatformat:2 }} UAH in {{ best_vendor|title }}</p>
+    </div>
+</body>
+</html>
