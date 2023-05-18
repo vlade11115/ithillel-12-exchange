@@ -52,6 +52,8 @@ def index(request):
                 "result": result,
                 "best_rate_value": best_rate[operation],
                 "best_vendor": best_rate["vendor"],
+                "best_rate_date": best_rate["date"],
+                "operation": operation,
             }
             return render(request, "exchange/index.html", context)
     else:
