@@ -69,14 +69,4 @@ app.conf.beat_schedule = {
         "schedule": every_3_am,
         "args": ("vkurse", "EUR", "UAH"),
     },
-    "minfin-USD-UAH": {
-        "task": "exchange.tasks.start_exchange",
-        "schedule": every_3_am,
-        "args": ("minfin", "USD", "UAH"),
-    },
-    "minfin-EUR-UAH": {
-        "task": "exchange.tasks.start_exchange",
-        "schedule": every_3_am,
-        "args": ("minfin", "EUR", "UAH"),
-    },
 }
