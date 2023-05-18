@@ -73,7 +73,8 @@ class OschadExchange(ExchangeBase):
 class CurrencyExchange(ExchangeBase):
     def get_rate(self):
         r = requests.get(
-            "https://api.currencyapi.com/v3/latest?apikey=Qja2YHvZFI5TI4eZdu24l1etllOPAnQ1mxlhlI2a&currencies=EUR%2CUSD&base_currency=UAH"
+            "https://api.currencyapi.com/v3/"
+            "latest?apikey=Qja2YHvZFI5TI4eZdu24l1etllOPAnQ1mxlhlI2a&currencies=EUR%2CUSD&base_currency=UAH"
         )
         r.raise_for_status()
         if self.currency_b == "UAH":
