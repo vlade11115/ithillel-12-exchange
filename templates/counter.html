@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" action="{% url 'index' %}">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+    <p></p>
+    {{message1}}
+    <p></p>
+    {{message2}}
+    <p></p>
+    {{message3}}
+    <p></p>
+    {{message4}}
+    <p></p>
+</form>
+</body>
+</html>

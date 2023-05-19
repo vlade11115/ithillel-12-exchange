@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 
 
@@ -18,3 +19,8 @@ class Rate(models.Model):
                 name="unique_rate",
             )
         ]
+
+
+class Counter(models.Model):
+    counter = models.IntegerField()
+    chois = models.CharField(max_length=8)

@@ -1,9 +1,9 @@
 import datetime
 
-from .models import Rate
-from .exchange_provider import MonoExchange, PrivatExchange
-
 from celery import shared_task
+
+from .exchange_provider import MonoExchange, PrivatExchange, VkurseExchange, NbuExchange, MinfinExchange
+from .models import Rate
 
 
 @shared_task
@@ -20,13 +20,54 @@ def start_exchange(vendor, currency_a, currency_b):
 
     if vendor == "privat":
         exchange = PrivatExchange(vendor, currency_a, currency_b)
-    elif vendor == "mono":
+        exchange.get_rate()
+        Rate.objects.get_or_create(
+            date=current_date,
+            vendor=vendor,
+            currency_a=currency_a,
+            currency_b=currency_b,
+            defaults={"sell": exchange.pair.sell, "buy": exchange.pair.buy},
+        )
+
+    if vendor == "mono":
         exchange = MonoExchange(vendor, currency_a, currency_b)
-    exchange.get_rate()
-    Rate.objects.get_or_create(
-        date=current_date,
-        vendor=vendor,
-        currency_a=currency_a,
-        currency_b=currency_b,
-        defaults={"sell": exchange.pair.sell, "buy": exchange.pair.buy},
-    )
+        exchange.get_rate()
+        Rate.objects.get_or_create(
+            date=current_date,
+            vendor=vendor,
+            currency_a=currency_a,
+            currency_b=currency_b,
+            defaults={"sell": exchange.pair.sell, "buy": exchange.pair.buy},
+        )
+    if vendor == "vkurse":
+        exchange = VkurseExchange(vendor, currency_a, currency_b)
+        exchange.get_rate()
+        Rate.objects.get_or_create(
+            date=current_date,
+            vendor=vendor,
+            currency_a=currency_a,
+            currency_b=currency_b,
+            defaults={"sell": exchange.pair.sell, "buy": exchange.pair.buy},
+        )
+
+    if vendor == "nbu":
+        exchange = NbuExchange(vendor, currency_a, currency_b)
+        exchange.get_rate()
+        Rate.objects.get_or_create(
+            date=current_date,
+            vendor=vendor,
+            currency_a=currency_a,
+            currency_b=currency_b,
+            defaults={"sell": exchange.pair.sell, "buy": exchange.pair.buy},
+        )
+
+    if vendor == "minfin":
+        exchange = MinfinExchange(vendor, currency_a, currency_b)
+        exchange.get_rate()
+        Rate.objects.get_or_create(
+            date=current_date,
+            vendor=vendor,
+            currency_a=currency_a,
+            currency_b=currency_b,
+            defaults={"sell": exchange.pair.sell, "buy": exchange.pair.buy},
+        )
