@@ -5,19 +5,75 @@
     <title>Title</title>
 </head>
 <body>
-<form method="post" action="{% url 'index' %}">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit">
-    <p></p>
-    {{message1}}
-    <p></p>
-    {{message2}}
-    <p></p>
-    {{message3}}
-    <p></p>
-    {{message4}}
-    <p></p>
-</form>
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+<div class="container">
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNxBEdJUUFdpfEvK5At3SY-Cb9zaNzGzF7Jw&usqp=CAU"
+                     alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                Change Safe
+            </a>
+        </div>
+    </nav>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link disabled">Put full name of currency -></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled">{{ message1 }}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled">{{ message2 }}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled">{{ message3 }}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled">{{ message4 }}</a>
+        </li>
+    </ul>
+    <div class="w-25 p-3" style="background-color: #f5f3f1;">
+        <form method="post" action="{% url 'index' %}">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-success">
+                    Submit
+                </button>
+            {% endbuttons %}
+        </form>
+    </div>
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://blog.depositphotos.com/wp-content/uploads/2017/07/Soothing-nature-backgrounds-2.jpg.webp"
+                     class="d-block w-100" alt="Soothing">
+            </div>
+            <div class="carousel-item">
+                <img src="https://blog.depositphotos.com/wp-content/uploads/2017/07/How-to-Use-Landscape-Photography-in-Creative-Campaigns-2.jpg.webp"
+                     class="d-block w-100" alt="Landscape">
+            </div>
+            <div class="carousel-item">
+                <img src="https://blog.depositphotos.com/wp-content/uploads/2017/07/How-to-Use-Landscape-Photography-in-Creative-Campaigns-1.jpg.webp"
+                     class="d-block w-100" alt="Campaigns">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    </form>
+</div>
 </body>
 </html>
