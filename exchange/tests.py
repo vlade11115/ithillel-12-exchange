@@ -58,4 +58,25 @@ def django_db_setup(django_db_setup, django_db_blocker):
 def test_index_view():
     response = index(None)
     assert response.status_code == 200
-    assert json.loads(response.content) == []
+    assert json.loads(response.content) == {
+        "current_rates": [
+            {
+                "id": 1,
+                "date": "2022-01-01",
+                "vendor": "mono",
+                "currency_a": "USD",
+                "currency_b": "EUR",
+                "sell": 1.1,
+                "buy": 1.2,
+            },
+            {
+                "id": 2,
+                "date": "2022-01-01",
+                "vendor": "privat",
+                "currency_a": "USD",
+                "currency_b": "EUR",
+                "sell": 1.01,
+                "buy": 1.0,
+            },
+        ]
+    }
