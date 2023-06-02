@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: GitHub Action for pytest
-        uses: cclauss/GitHub-Action-for-pytest@0.5.0
-        with:
-          args: pytest
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pytest
