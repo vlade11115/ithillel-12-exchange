@@ -28,7 +28,7 @@ def test_exchange_mono():
     e.get_rate()
     assert e.pair.sell == 37.4406
 
-
+@responses.activate
 def test_privat_rate():
     mocked_response = json.load(open(root / "fixtures/privat_response.json"))
     responses.get(
@@ -39,7 +39,7 @@ def test_privat_rate():
     e.get_rate()
     assert e.pair.sell == 37.45318
 
-
+@responses.activate
 def test_oschad_rate():
     mocked_response = json.load(open(root / "fixtures/oschad_response.json"))
     responses.get(
@@ -50,7 +50,7 @@ def test_oschad_rate():
     e.get_rate()
     assert e.pair.sell == 36.5686
 
-
+@responses.activate
 def test_currency_rate():
     mocked_response = json.load(open(root / "fixtures/currency_response.json"))
     responses.get(
@@ -62,7 +62,7 @@ def test_currency_rate():
     e.get_rate()
     assert e.pair.sell == float(1 / 0.027082)
 
-
+@responses.activate
 def test_vkurse_rate():
     mocked_response = json.load(open(root / "fixtures/vkurse_response.json"))
     responses.get(
@@ -73,7 +73,7 @@ def test_vkurse_rate():
     e.get_rate()
     assert e.pair.sell == 37.50
 
-
+@responses.activate
 def test_minfin_rate():
     mocked_response = json.load(open(root / "fixtures/minfin_response.json"))
     responses.get(
