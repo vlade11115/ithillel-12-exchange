@@ -6,12 +6,10 @@ import pytest
 import responses
 from django.core.management import call_command
 from freezegun import freeze_time
-
+from exchange.exchange_provider import MinfinExchange,MonoExchange,NbuExchange, PrivatExchange,VkurseExchange
 
 root = pathlib.Path(__file__).parent
 
-
-<<<<<<< HEAD
 class TestStringMethods(unittest.TestCase):
     @responses.activate
     def test_minfin(self):
