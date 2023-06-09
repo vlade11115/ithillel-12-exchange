@@ -4,35 +4,52 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Counter',
+            name="Counter",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('counter', models.IntegerField()),
-                ('chois', models.CharField(max_length=8)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("counter", models.IntegerField()),
+                ("chois", models.CharField(max_length=8)),
             ],
         ),
         migrations.CreateModel(
-            name='Rate',
+            name="Rate",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField()),
-                ('vendor', models.CharField(max_length=255)),
-                ('currency_a', models.CharField(max_length=3)),
-                ('currency_b', models.CharField(max_length=3)),
-                ('sell', models.DecimalField(decimal_places=5, max_digits=10)),
-                ('buy', models.DecimalField(decimal_places=5, max_digits=10)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("vendor", models.CharField(max_length=255)),
+                ("currency_a", models.CharField(max_length=3)),
+                ("currency_b", models.CharField(max_length=3)),
+                ("sell", models.DecimalField(decimal_places=5, max_digits=10)),
+                ("buy", models.DecimalField(decimal_places=5, max_digits=10)),
             ],
         ),
         migrations.AddConstraint(
-            model_name='rate',
-            constraint=models.UniqueConstraint(fields=('date', 'vendor', 'currency_a', 'currency_b'), name='unique_rate'),
+            model_name="rate",
+            constraint=models.UniqueConstraint(
+                fields=("date", "vendor", "currency_a", "currency_b"),
+                name="unique_rate",
+            ),
         ),
     ]
