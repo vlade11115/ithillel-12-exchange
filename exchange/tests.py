@@ -22,6 +22,7 @@ def test_exchange_mono():
     assert e.pair.sell == 37.4406
 
 
+@responses.activate
 def test_privat_rate():
     mocked_response = json.load(open(root / "fixtures/privat_response.json"))
     responses.get(
