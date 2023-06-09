@@ -61,43 +61,51 @@ class PrivatExchange(ExchangeBase):
 
 class VkurseExchange(ExchangeBase):
     def get_rate(self):
-        r = requests.get('https://vkurse.dp.ua/course.json')
+        r = requests.get("https://vkurse.dp.ua/course.json")
         r.raise_for_status()
         for rate in r.json():
-            if rate == 'Dollar':
-                if 'USD' == self.currency_a and 'UAH' == self.currency_b:
-                    self.pair = SellBuy(float(r.json()[rate]['sale']), float(r.json()[rate]['buy']))
-            elif rate == 'Euro':
-                if 'EUR' == self.currency_a and 'UAH' == self.currency_b:
-                    self.pair = SellBuy(float(r.json()[rate]['sale']), float(r.json()[rate]['buy']))
+            if rate == "Dollar":
+                if "USD" == self.currency_a and "UAH" == self.currency_b:
+                    self.pair = SellBuy(
+                        float(r.json()[rate]["sale"]), float(r.json()[rate]["buy"])
+                    )
+            elif rate == "Euro":
+                if "EUR" == self.currency_a and "UAH" == self.currency_b:
+                    self.pair = SellBuy(
+                        float(r.json()[rate]["sale"]), float(r.json()[rate]["buy"])
+                    )
 
 
 class NbuExchange(ExchangeBase):
     def get_rate(self):
         a_code = ExchangeCodes[self.currency_a].value
-        r = requests.get('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json')
+        r = requests.get(
+            "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
+        )
         r.raise_for_status()
         for rate in r.json():
             if rate["r030"] == a_code:
-                if rate['cc'] == self.currency_a and 'UAH' == self.currency_b:
+                if rate["cc"] == self.currency_a and "UAH" == self.currency_b:
                     # тут трохи накинув на тому що апи НБУ дає тількі продаж
-                    self.pair = SellBuy(float(rate['rate'] + 1.5), float(rate['rate']))
+                    self.pair = SellBuy(float(rate["rate"] + 1.5), float(rate["rate"]))
             if rate["r030"] == a_code:
-                if rate['cc'] == self.currency_a and 'UAH' == self.currency_b:
+                if rate["cc"] == self.currency_a and "UAH" == self.currency_b:
                     # тут трохи накинув на тому що апи НБУ дає тількі продаж
-                    self.pair = SellBuy(float(rate['rate'] + 1.5), float(rate['rate']))
+                    self.pair = SellBuy(float(rate["rate"] + 1.5), float(rate["rate"]))
 
 
 class MinfinExchange(ExchangeBase):
     def get_rate(self):
-        r = requests.get('https://api.minfin.com.ua/mb/51bafed21077e7a570ec1af587f35c1155bef903/')
+        r = requests.get(
+            "https://api.minfin.com.ua/mb/51bafed21077e7a570ec1af587f35c1155bef903/"
+        )
         r.raise_for_status()
         for rate in r.json():
-            if rate['currency'] == 'eur':
-                if 'EUR' == self.currency_a and 'UAH' == self.currency_b:
-                    self.pair = SellBuy(float(rate['ask']), float(rate['bid']))
+            if rate["currency"] == "eur":
+                if "EUR" == self.currency_a and "UAH" == self.currency_b:
+                    self.pair = SellBuy(float(rate["ask"]), float(rate["bid"]))
                     break
-            if rate['currency'] == 'usd':
-                if 'USD' == self.currency_a and 'UAH' == self.currency_b:
-                    self.pair = SellBuy(float(rate['ask']), float(rate['bid']))
+            if rate["currency"] == "usd":
+                if "USD" == self.currency_a and "UAH" == self.currency_b:
+                    self.pair = SellBuy(float(rate["ask"]), float(rate["bid"]))
                     break
