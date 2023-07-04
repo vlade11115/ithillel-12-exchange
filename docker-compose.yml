@@ -1,0 +1,49 @@
+services:
+  django_migrations:
+    restart: on-failure
+    depends_on:
+      - db
+    build: .
+    command: python manage.py migrate
+  django:
+    restart: always
+
+    depends_on:
+      - django_migrations
+    build: .
+    command: "python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+  db:
+    image: "postgres"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  rabbit:
+    image: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+  celery:
+    build: .
+    restart: on-failure
+    depends_on:
+      - rabbit
+      - db
+      - django_migrations
+    command: celery -A exchange_rates worker -l INFO
+    environment:
+      - BROKER_URL=amqp://admin:mypass@rabbit:5672//
+
+  celery_beat:
+    build: .
+    restart: on-failure
+    depends_on:
+      - celery
+    command: celery -A exchange_rates beat -l INFO
+    environment:
+      - BROKER_URL=amqp://admin:mypass@rabbit:5672//
