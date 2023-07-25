@@ -6,19 +6,24 @@ import responses
 from django.core.management import call_command
 from freezegun import freeze_time
 
-from .exchange_provider import MonoExchange, PrivatExchange
+from .exchange_provider import (
+    MonoExchange,
+    PrivatExchange,
+    VkurseExchange,
+    GovUaExchange,
+    MinfinExchange,
+)
 from .views import index
 
 root = pathlib.Path(__file__).parent
 
 
-# Create your tests here.
-
-
 @pytest.fixture
 def mocked():
     def inner(file_name):
-        return json.load(open(root / "fixtures" / file_name))
+        return json.load(
+            open(root / "fixtures" / file_name, encoding="utf-8", mode="r")
+        )
 
     return inner
 
@@ -47,36 +52,37 @@ def test_privat_rate(mocked):
     assert e.pair.sell == 37.45318
 
 
-@pytest.fixture(scope="session")
-def django_db_setup(django_db_setup, django_db_blocker):
-    with django_db_blocker.unblock():
-        call_command("loaddata", "db_init.yaml")
+@responses.activate
+def test_vkurse(mocked):
+    mocked_response = mocked("vkurse_response.json")
+    responses.get(
+        "https://vkurse.dp.ua/course.json",
+        json=mocked_response,
+    )
+    e = VkurseExchange("vkurse", "USD", "UAH")
+    e.get_rate()
+    assert e.pair.sell == 37.3
 
 
-@freeze_time("2022-01-01")
-@pytest.mark.django_db
-def test_index_view():
-    response = index(None)
-    assert response.status_code == 200
-    assert json.loads(response.content) == {
-        "current_rates": [
-            {
-                "id": 1,
-                "date": "2022-01-01",
-                "vendor": "mono",
-                "currency_a": "USD",
-                "currency_b": "EUR",
-                "sell": 1.1,
-                "buy": 1.2,
-            },
-            {
-                "id": 2,
-                "date": "2022-01-01",
-                "vendor": "privat",
-                "currency_a": "USD",
-                "currency_b": "EUR",
-                "sell": 1.01,
-                "buy": 1.0,
-            },
-        ]
-    }
+@responses.activate
+def test_govua(mocked):
+    mocked_response = mocked("bank_gov_ua_response.json")
+    responses.get(
+        "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json",
+        json=mocked_response,
+    )
+    e = GovUaExchange("govua", "USD", "UAH")
+    e.get_rate()
+    assert e.pair.sell == 36.5686
+
+
+@responses.activate
+def test_minfin(mocked):
+    mocked_response = mocked("minfin_response.json")
+    responses.get(
+        "https://api.minfin.com.ua/summary/8b5b01d410dcd6306fdd953856806fcb53842041/",
+        json=mocked_response,
+    )
+    e = MinfinExchange("minfin", "USD", "UAH")
+    e.get_rate()
+    assert e.pair.sell == 37.4000

@@ -1,0 +1,56 @@
+{
+  "usd": {
+    "bid": "36.7000",
+    "ask": "37.4000",
+    "trendAsk": 0,
+    "trendBid": 0
+  },
+  "eur": {
+    "bid": "40.9000",
+    "ask": "41.7500",
+    "trendAsk": -0.049999999999997,
+    "trendBid": 0
+  },
+  "rub": {
+    "bid": "0.3000",
+    "ask": "0.4500",
+    "trendAsk": 0,
+    "trendBid": 0
+  },
+  "gbp": {
+    "bid": "45.7000",
+    "ask": "48.4000",
+    "trendAsk": 0,
+    "trendBid": 0
+  },
+  "pln": {
+    "bid": "8.9500",
+    "ask": "9.4000",
+    "trendAsk": 0,
+    "trendBid": 0.049999999999999
+  },
+  "chf": {
+    "bid": "41.0000",
+    "ask": "43.0000",
+    "trendAsk": -0.07,
+    "trendBid": -0.1
+  },
+  "czk": {
+    "bid": "1.5000",
+    "ask": "1.8250",
+    "trendAsk": 0.025,
+    "trendBid": -0.1
+  },
+  "cad": {
+    "bid": "26.9000",
+    "ask": "28.5000",
+    "trendAsk": -0.024999999999999,
+    "trendBid": 0.175
+  },
+  "huf": {
+    "bid": "0.0950",
+    "ask": "0.1100",
+    "trendAsk": 0,
+    "trendBid": 0
+  }
+}

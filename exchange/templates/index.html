@@ -1,0 +1,26 @@
+<form action="{% url 'index' %}" method="post" class="form">
+    {% csrf_token %}
+    <h1>Currency Exchange</h1>
+
+    {{ form.operation }}
+    {{ form.currency_value }}
+    {{ form.currency }}
+
+    {% if operation == "buy" %}
+    You will get
+    {% else %}
+    You will spend
+    {% endif %}
+
+    {{ result|floatformat }} UAH
+
+    {% if best_rate_value %}
+
+    Best rate for you on {{ best_rate_date|date:"d.m.Y" }}: {{ best_rate_value|floatformat:2 }} UAH in {{ best_vendor|title }}
+
+
+    {% endif %} <br>
+
+    <button type="submit">Calculate</button>
+
+</form>
