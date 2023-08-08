@@ -39,4 +39,34 @@ app.conf.beat_schedule = {
         "schedule": every_3_am,
         "args": ("privat", "USD", "UAH"),
     },
+    "vkurse-EUR-UAH": {
+        "task": "exchange.tasks.vkurse_exchange",
+        "schedule": every_3_am,
+        "args": ("vkurse", "EUR", "UAH"),
+    },
+    "vkurse-USD-UAH": {
+        "task": "exchange.tasks.vkurse_exchange",
+        "schedule": every_3_am,
+        "args": ("vkurse", "USD", "UAH"),
+    },
+    "minfin-EUR-UAH": {
+        "task": "exchange.tasks.minfin_exchange",
+        "schedule": every_3_am,
+        "args": ("minfin", "EUR", "UAH"),
+    },
+    "minfin-USD-UAH": {
+        "task": "exchange.tasks.minfin_exchange",
+        "schedule": every_3_am,
+        "args": ("minfin", "USD", "UAH"),
+    },
+    "govua-EUR-UAH": {
+        "task": "exchange.tasks.govua_exchange",
+        "schedule": every_3_am,
+        "args": ("govua", "EUR", "UAH"),
+    },
+    "govua-USD-UAH": {
+        "task": "exchange.tasks.govua_exchange",
+        "schedule": every_3_am,
+        "args": ("govua", "USD", "UAH"),
+    },
 }
